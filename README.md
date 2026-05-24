@@ -16,6 +16,7 @@
     - python manage.py runserver
 
 - 同步資料表
+    - python manage.py makemigrations
     - python manage.py migrate
 
 - 建立管理員

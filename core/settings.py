@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
+    "todos",
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,7 @@ TIME_ZONE = "Asia/Taipei"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
