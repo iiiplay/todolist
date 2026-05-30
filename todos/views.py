@@ -1,60 +1,46 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .models import Todo
 from .forms import TodoForm
 
 
-# Create your views here.
+@login_required
 def todo_list(request):
-    todos = Todo.objects.all().order_by("-important", "-created")
-    print(todos)
-
+    todos = Todo.objects.filter(user=request.user).order_by("-important", "-created")
     return render(request, "todos/list.html", {"todos": todos})
 
 
+@login_required
 def todo_delete(request, id):
     try:
-        todo = Todo.objects.get(id=id)
-        print(todo)
+        todo = Todo.objects.get(id=id, user=request.user)
         todo.delete()
-    except:
-        print("無此ID")
-
+    except Todo.DoesNotExist:
+        pass
     return redirect("todo-list")
 
 
+@login_required
 def todo_update(request, id):
-    # get
-    message = ""
+    todo = Todo.objects.get(id=id, user=request.user)
     if request.method == "GET":
-        todo = Todo.objects.get(id=id)
-        print(todo)
         form = TodoForm(instance=todo)
-
-    # post
     elif request.method == "POST":
-        print(request.POST)
-        form = TodoForm(request.POST)
+        form = TodoForm(request.POST, instance=todo)
         if form.is_valid():
             form.save()
-            message = "更新todo完成!"
-
             return redirect("todo-list")
+    return render(request, "todos/update.html", {"form": form})
 
-    return render(request, "todos/update.html", {"form": form, "message": message})
 
-
+@login_required
 def todo_create(request):
-    # get
     form = TodoForm()
-    message = ""
-    # post
     if request.method == "POST":
-        print(request.POST)
         form = TodoForm(request.POST)
         if form.is_valid():
-            form.save()
-            print("新增todo完成!")
-            message = "新增todo完成!"
-
-    return render(request, "todos/create.html", {"form": form, "message": message})
+            todo = form.save(commit=False)
+            todo.user = request.user
+            todo.save()
+            return redirect("todo-list")
+    return render(request, "todos/create.html", {"form": form})
