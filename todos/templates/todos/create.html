@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新增代辦事項</title>
-</head>
-
-<body>
-    <a href="{% url 'todo-list' %}">首頁</a>
-    <h1>新增代辦事項</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">確定</button>
-    </form>
-    <p>{{message}}</p>
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% block head %}
+<title>新增代辦事項</title>
+{% endblock %}
+{% block content %}
+<h1>新增代辦事項</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">確定</button>
+</form>
+{% endblock %}

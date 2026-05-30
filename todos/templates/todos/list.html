@@ -1,74 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoList</title>
-    <style>
-        .todo-field {
-            background-color: antiquewhite;
-            margin: 24px;
-            padding: 12px;
-            border-radius: 12px;
-            width: 400px;
-        }
+{% block head %}
+<title>TodoList</title>
+<style>
+    .todo-field {
+        background-color: antiquewhite;
+        margin: 24px;
+        padding: 12px;
+        border-radius: 12px;
+        width: 400px;
+    }
 
-        .title {
-            margin-top: 12px;
-            font-size: 32px;
-        }
+    .title {
+        margin-top: 12px;
+        font-size: 32px;
+    }
 
-        .created {
-            background-color: cadetblue;
-            color: white;
-            border-radius: 6px;
-            padding: 3px;
-        }
+    .created {
+        background-color: cadetblue;
+        color: white;
+        border-radius: 6px;
+        padding: 3px;
+    }
 
-        .content {
-            border-radius: 12px;
-            color: rgb(170, 94, 94);
-            padding: 12px;
-        }
+    .content {
+        border-radius: 12px;
+        color: rgb(170, 94, 94);
+        padding: 12px;
+    }
 
-        .completed {
-            margin-left: 12px;
-            color: blue;
-        }
+    .completed {
+        margin-left: 12px;
+        color: blue;
+    }
 
-        .important {
-            margin-left: 12px;
-            color: red;
-        }
-    </style>
+    .important {
+        margin-left: 12px;
+        color: red;
+    }
+</style>
+{% endblock %}
 
-</head>
+{% block content %}
 
-<body>
-    <a href="{% url 'todo-create' %}">新增Todo</a>
-    <h1>代辦事項列表</h1>
-    {% for todo in todos %}
-    <div class="todo-field">
-        <small class="created">{{todo.created}}
-        </small>
-        {% if todo.important %}
-        <span class="important">重要</span>
-        {% endif %}
-        {% if todo.completed %}
-        <span class="completed">完成</span>
-        {% endif %}
-        <div class="title">{{todo.title}}</div>
-        {% if todo.content %}
-        <div class="content">{{todo.content|linebreaks}}</div>
-        {% endif %}
+<h1>代辦事項列表</h1>
+{% for todo in todos %}
+<div class="todo-field">
+    <small class="created">{{todo.created}}
+    </small>
+    {% if todo.important %}
+    <span class="important">重要</span>
+    {% endif %}
+    {% if todo.completed %}
+    <span class="completed">完成</span>
+    {% endif %}
+    <div class="title">{{todo.title}}</div>
+    {% if todo.content %}
+    <div class="content">{{todo.content|linebreaks}}</div>
+    {% endif %}
+    <a href="{% url 'todo-delete'  todo.id  %}">刪除</a>
+    <a href="{% url 'todo-update'  todo.id  %}">更新</a>
 
-        <a href="{% url 'todo-delete'  todo.id  %}">刪除</a>
-        <a href="{% url 'todo-update'  todo.id  %}">更新</a>
+</div>
 
-    </div>
-
-    {% endfor %}
-</body>
-
-</html>
+{% endfor %}
+{% endblock %}

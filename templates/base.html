@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+    <a href="{% url 'todo-list' %}">首頁</a>
+    <a href="{% url 'todo-create' %}">新增Todo</a>
+    {% block content %}
+
+
+    {% endblock %}
+    <p>{{message}}</p>
+</body>
+
+</html>
