@@ -46,11 +46,11 @@
 </head>
 
 <body>
+    <a href="{% url 'todo-create' %}">新增Todo</a>
     <h1>代辦事項列表</h1>
     {% for todo in todos %}
     <div class="todo-field">
         <small class="created">{{todo.created}}
-
         </small>
         {% if todo.important %}
         <span class="important">重要</span>
@@ -64,6 +64,7 @@
         {% endif %}
 
         <a href="{% url 'todo-delete'  todo.id  %}">刪除</a>
+        <a href="{% url 'todo-update'  todo.id  %}">更新</a>
 
     </div>
 
