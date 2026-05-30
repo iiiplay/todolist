@@ -24,4 +24,16 @@ def todo_delete(request, id):
 
 
 def todo_create(request):
-    return render(request, "todos/create.html", {"form": TodoForm()})
+    # get
+    form = TodoForm()
+    message = ""
+    # post
+    if request.method == "POST":
+        print(request.POST)
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("新增todo完成!")
+            message = "新增todo完成!"
+
+    return render(request, "todos/create.html", {"form": form, "message": message})
