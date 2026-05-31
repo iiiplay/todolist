@@ -46,6 +46,7 @@
 </head>
 
 <body>
+    <a href="{%  url 'todo-create' %}">新增Todo</a>
     <h1>代辦事項列表</h1>
     {% for todo in todos %}
     <div class="todo-field">
@@ -62,8 +63,7 @@
         {% if todo.content %}
         <div class="content">{{todo.content|linebreaks}}</div>
         {% endif %}
-
-        <a href="{% url 'todo-delete'  todo.id  %}">刪除</a>
+        <a href="{% url 'todo-delete'  todo.id  %}" onclick="return confirm('是否確定刪除?!')">刪除</a>
 
     </div>
 

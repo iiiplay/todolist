@@ -9,7 +9,8 @@
 
 <body>
     <h1>新增代辦事項</h1>
-    <form action="">
+    <form action="" method="POST">
+        {% csrf_token %}
         {{form.as_p}}
         <button type="submit">確定</button>
     </form>
