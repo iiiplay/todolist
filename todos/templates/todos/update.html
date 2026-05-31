@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
-
 {% block head %}
-<title>更新代辦頁面</title>
+<title>更新代辦事項</title>
 {% endblock %}
-
-{%　block content %}
+{% block content %}
 <h1>更新代辦事項</h1>
 <form action="" method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit">更新</button>
+    <button type="submit">確定</button>
 </form>
-{% if message %}
-{{message}}
-{% endif %}
+<p>{{message}}</p>
 {% endblock %}

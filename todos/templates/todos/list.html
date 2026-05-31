@@ -1,29 +1,117 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>代辦事項列表</title>
+<title>TodoList</title>
+<style>
+    .todo-item {
+        background: #fdf6e3;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .todo-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 6px 0;
+    }
+
+    .badge-created {
+        background: cadetblue;
+        color: white;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 0.8rem;
+    }
+
+    .badge-important {
+        margin-left: 8px;
+        color: #c0392b;
+        font-weight: bold;
+    }
+
+    .badge-completed {
+        margin-left: 8px;
+        color: #2471a3;
+    }
+
+    .todo-content {
+        color: #666;
+        margin: 6px 0;
+    }
+
+    .todo-actions {
+        margin-top: 8px;
+    }
+
+    .todo-actions a {
+        margin-right: 12px;
+        text-decoration: none;
+        color: #555;
+    }
+
+    .todo-actions a:hover {
+        color: #000;
+    }
+
+    /* 1. 刪除按鈕：永遠紅底白字 */
+    .todo-button-delete,
+    .todo-button-delete:hover,
+    .todo-button-delete:active,
+    .todo-button-delete:visited {
+        background-color: #d9363e;
+        /* 漂亮的紅色 */
+        color: #ffffff !important;
+        /* 強制白字 */
+        padding: 4px 8px;
+        /* 讓按鈕有上下左右內距 */
+        border-radius: 4px;
+        /* 稍微圓角 */
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    /* 2. 更新按鈕：永遠灰底深字 */
+    .todo-button-update,
+    .todo-button-update:hover,
+    .todo-button-update:active,
+    .todo-button-update:visited {
+        background-color: #e0e0e0;
+        /* 淡淡的灰色背景 */
+        color: #333333 !important;
+        /* 深灰色文字 */
+        padding: 4px 8px;
+        /* 內距與刪除按鈕一致 */
+        border-radius: 4px;
+        /* 圓角與刪除按鈕一致 */
+        text-decoration: none;
+        display: inline-block;
+        margin-left: 4px;
+        /* 與刪除按鈕拉開一點點距離 */
+    }
+</style>
 {% endblock %}
 
-{%　block content %}
+{% block content %}
 <h1>代辦事項列表</h1>
 {% for todo in todos %}
-<div class="todo-field">
-    <small class="created">{{todo.created}}
-
-    </small>
-    {% if todo.important %}
-    <span class="important">重要</span>
-    {% endif %}
-    {% if todo.completed %}
-    <span class="completed">完成</span>
-    {% endif %}
-    <div class="title">{{todo.title}}</div>
+<div class="todo-item">
+    <div>
+        <small class="badge-created">{{ todo.created }}</small>
+        {% if todo.important %}<span class="badge-important">重要</span>{% endif %}
+        {% if todo.completed %}<span class="badge-completed">完成</span>{% endif %}
+    </div>
+    <div class="todo-title">{{ todo.title }}</div>
     {% if todo.content %}
-    <div class="content">{{todo.content|linebreaks}}</div>
+    <div class="todo-content">{{ todo.content|linebreaks }}</div>
     {% endif %}
-    <a href="{% url 'todo-delete'  todo.id  %}" onclick="return confirm('是否確定刪除?!')">刪除</a>
-    <a href="{% url 'todo-update'  todo.id  %}">更新</a>
-
+    <hr>
+    <div class="todo-actions">
+        <a class="todo-button-delete" href="{% url 'todo-delete' todo.id %}"
+            onclick="return confirm('確定要刪除「{{ todo.title }}」？')">刪除</a>
+        <a class="todo-button-update" href="{% url 'todo-update' todo.id %}">更新</a>
+    </div>
 </div>
 {% endfor %}
 {% endblock %}
